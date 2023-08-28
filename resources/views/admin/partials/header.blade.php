@@ -2,7 +2,7 @@
     <nav class="bg-dark navbar navbar-expand-lg bg-body-tertiary navbar_admin-client" data-bs-theme="dark">
         <div class="container-md ">
             <h3 class="text-white">
-                Albums Music
+                Albums
             </h3>
             <div class="collapse navbar-collapse  text-white" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">

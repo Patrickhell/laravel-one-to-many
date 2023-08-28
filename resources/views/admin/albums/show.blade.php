@@ -6,13 +6,15 @@
         <div class="card p-0 text-white mb-3" style="width: 30rem;">
             <div class="card-header d-flex justify-content-end">
                 @if(str_starts_with( $album->image, 'http'))
-                <img src="{{ $album->imageUrl }}" style="width: 28rem;" alt="{{ $album->title}}">
+                <img src="{{ $album->image }}" style="width: 28rem;" alt="{{ $album->title}}">
                 @else
-                <img src="{{ asset('storage/'. $album->imageUrl) }}" style="width: 28rem;" alt="{{ $album->title}}">
+                <img src="{{ asset('storage/'. $album->image) }}" style="width: 28rem;" alt="{{ $album->title}}">
                 @endif
             </div>
+
             <div class="card-body px-5 bg-dark ">
                 ID : {{ $album->id }}
+                <p>Album Category : {{$album->albumType->name}}</p>
                 <p class="card-title"> SINGER NAME'S: {{ $album->singer_name }}</p>
                 <p class="card-subtitle"> TITLE: {{ $album->title }}</p>
                 <p> SLUG : {{ $album->slug }}</p>

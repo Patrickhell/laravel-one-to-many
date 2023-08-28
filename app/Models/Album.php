@@ -12,11 +12,17 @@ class Album extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'Album_type',
         'singer_name',
         'title',
         'slug',
         'genres',
         'songs_number',
-        'imageUrl'
+        'image'
     ];
+
+    public function albumType()
+    {
+        return $this->belongsTo(AlbumType::class);
+    }
 }

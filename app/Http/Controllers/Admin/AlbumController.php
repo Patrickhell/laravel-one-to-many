@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Album;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
@@ -33,20 +32,22 @@ class AlbumController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Album $album)
     {
 
         $data = $request->validate([
             'singer_name' => ['required', 'min:10', 'max:255'],
-            'title' => ['required', 'unique:albums', 'max:255'],
-            'imageUrl' => ['required', 'imageUrl'],
+            'title' => ['required', Rule::unique('albums')->ignore($album->id), 'max:255'],
+            'image' => ['image'],
             'genres' => ['required', 'max:255'],
             'songs_number' => ['required', 'max:20'],
 
         ]);
 
-        $img_path = Storage::put('uploads/admin/albums', $request['imageUrl']);
-        $data['imageUrl'] = $img_path;
+        if ($request->hasFile('image')) {
+            $img_path = Storage::put('uploads/posts', $request['image']);
+            $data['image'] = $img_path;
+        }
 
         $data['slug'] = Str::of($data['title'])->slug('-');
         $newAlbum = Album::create($data);
@@ -80,16 +81,16 @@ class AlbumController extends Controller
             //per risolvere il problema dell'alert che dice che il titolo è già stato utilizzato infatti perché esendo unico non pùo essere usato più di una volta
             // si usa : il methodo ignore() usando la libreria: use Illuminate\Validation\Rule;  
             'title' => ['required', Rule::unique('albums')->ignore($album->id), 'max:255'],
-            'imageUrl' => ['image'],
+            'image' => ['image', 'max:555'],
             'genres' => ['required', 'max:255'],
             'songs_number' => ['required', 'max:20'],
 
         ]);
 
         if ($request->hasFile('image')) {
-            Storage::delete($album->imageUrl);
-            $img_path = Storage::put('uploads/admin/albums', $request['imageUrl']);
-            $data['imageUrl'] = $img_path;
+            Storage::delete($album->image);
+            $img_path = Storage::put('uploads/admin/albums', $request['image']);
+            $data['image'] = $img_path;
         }
 
 

@@ -6,6 +6,15 @@
         @csrf
         <div class="row justify-content-center">
             <div class="col-6">
+                @error('Album_type')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <div class="mb-3">
+                    <label for="singer_name" class="form-label">
+                        Album type
+                    </label>
+                    <input type="text" class="form-control" id="singer_name" name="Album_type" value="{{old('Album_type', '' ) }}">
+                </div>
                 @error('singer_name')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -24,6 +33,8 @@
                     </label>
                     <input type="text" class="form-control" id="title" name="title" value="{{old('title', '' ) }}">
                 </div>
+            </div>
+            <div class=" col-6">
                 @error('genres')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -33,8 +44,6 @@
                     </label>
                     <input type="text" class="form-control" id="genres" name="genres" value="{{old('genres', '' ) }}">
                 </div>
-            </div>
-            <div class=" col-6">
 
                 <div class="mb-3">
                     <label for="songs_number" class="form-label">
